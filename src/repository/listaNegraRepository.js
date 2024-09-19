@@ -29,4 +29,17 @@ export async function listar() {
     return registros;
 }
 
+export async function listarPorNome(nome) {
+    const comando = `
+        SELECT  id_lista_negra       id,
+        nm_pessoa            nome,
+        ds_motivo            motivo,
+        dt_vinganca          vinganca,
+        nr_nota_odio         notaOdio,
+        bt_perdoado          perdoado
+        FROM tb_lista_negra WHERE nm_pessoa LIKE ?;
+    `
 
+    let [registros] = await con.query(comando, [`${nome}%`]);
+    return registros;
+}
